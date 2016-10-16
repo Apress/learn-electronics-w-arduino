@@ -1,0 +1,64 @@
+/* Converting LM35 Sensor data to Temperature
+Sketch will take sensor data and convert it to volts then to temperature.
+Volts and Temperature values will be displayed on serial monitor and LCD.
+It turns ON a small dc motor when sensor temperature is greater than the threshold value.
+
+Remixed sketch of ladyada's TM36 sensor tutorial
+http://www.ladyada.net/learn/sensors/tmp36.html
+
+Don Wilcher 03/17/12
+
+*/
+
+
+
+//LM35 Pin Variables
+
+int sensorPin = 0;// The analog pin the LM35's Vout is connected to.
+const int motorPin = 9; // the number of the motor pin
+
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+/*
+ Initialize serial connection with the computer*/
+void setup()
+{
+  Serial.begin(9600); // Begin serial connection with the computer
+  lcd.begin(16,2);
+  analogReference(INTERNAL);  
+	/* for Arduino Mega please use analogReference(INTERNAL1v1); */
+  pinMode(motorPin, OUTPUT);
+ 
+}
+
+void loop()
+{ 
+  int reading = analogRead(sensorPin); // read data from LM35 using Arduino (A0) pin
+  float voltage = reading *5.0; // Convert sensor data to voltage
+  voltage /=1024.0;
+  
+  Serial.print(voltage); Serial.println("volts"); // Print voltage on serial monitor
+  
+  float temperatureC=((100*1.1*voltage)/1024)*100;
+  
+  float temperatureF=(temperatureC*(9.0/5.0)) + 32; //Convert voltage to temperature
+  
+  Serial.print(temperatureF); Serial.println(" degrees F");// Print Temperature in C
+  
+  // display Temperature on LCD
+  lcd.setCursor(0,0);
+  lcd.print("Temperature=");
+  lcd.setCursor(0,1);
+  lcd.print(temperatureF); lcd.println(" degrees F ");
+  
+  //DC Motor control
+  if(temperatureF >58){
+     digitalWrite(motorPin, HIGH);
+   }
+    else{
+      digitalWrite(motorPin, LOW);
+    }
+  
+    delay(10);// print data every 10milliseconds
+}

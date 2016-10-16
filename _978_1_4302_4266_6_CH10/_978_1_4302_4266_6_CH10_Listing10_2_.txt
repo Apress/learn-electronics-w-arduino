@@ -1,0 +1,80 @@
+/* Converting LM35 Sensor data to Volts
+Sketch will take sensor data and convert it to volts.
+Volts value will be displayed on serial monitor
+
+Remixed sketch of ladyada's TM36 sensor tutorial
+http://www.ladyada.net/learn/sensors/tmp36.html
+
+Don Wilcher 03/16/12
+
+*/
+
+
+//LM35 Pin Variables
+
+int sensorPin = 0;// The analog pin the LM35's Vout is connected to.
+
+/*
+ Initialize serial connection with the computer*/
+void setup()
+{ 
+  Serial.begin(9600); // Begin serial connection with the computer
+pinMode(sensorPin, INPUT); 
+
+}
+
+void loop()
+{ 
+  int reading = analogRead(sensorPin); // read data from LM35 using Arduino (A0) pin
+  float voltage = reading *5.0; // Convert sensor data to voltage
+  voltage /= 1024.0;
+  Serial.print(voltage); Serial.println("volts"); // Print voltage on serial monitor
+  
+  float temperatureC=(0.5-voltage)*100; //Convert voltage to temperature
+  
+  Serial.print(temperatureC); Serial.println(" degrees C");// Print Temperature in C
+  
+  delay(1000);// print data every second
+}
+
+Listing 10-3. LM35 Farenheit Temperature sketch
+/* Converting LM35 Sensor data to Volts
+Sketch will take sensor data and convert it to volts.
+Volts value will be displayed on serial monitor
+
+Remixed sketch of ladyada's TM36 sensor tutorial
+http://www.ladyada.net/learn/sensors/tmp36.html
+
+Don Wilcher 03/16/12
+
+*/
+
+
+//LM35 Pin Variables
+
+int sensorPin = 0;// The analog pin the LM35's Vout is connected to.
+
+/*
+ Initialize serial connection with the computer*/
+void setup()
+{ 
+  Serial.begin(9600); // Begin serial connection with the computer
+ pinMode(sensorPin, INPUT); 
+
+}
+
+void loop()
+{ 
+  int reading = analogRead(sensorPin); // read data from LM35 using Arduino (A0) pin
+  float voltage = reading *5.0; // Convert sensor data to voltage
+  voltage /= 1024.0;
+  Serial.print(voltage); Serial.println("volts"); // Print voltage on serial monitor
+  
+  float temperatureC=(0.5-voltage)*100;
+  
+  float temperatureF=(temperatureC*9.0/5.0)+32; //Convert voltage to temperature
+  
+  Serial.print(temperatureF); Serial.println(" degrees F");// Print Temperature in C
+  
+  delay(1000);// print data every second
+}

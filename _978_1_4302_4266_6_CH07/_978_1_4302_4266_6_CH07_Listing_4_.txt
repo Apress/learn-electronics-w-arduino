@@ -1,0 +1,60 @@
+/*
+  Keypad
+ 
+ Turns on and off a vibration motor connected to digital  
+ pin 13, when pressing a 3 specified buttons (1,2,3) on a keypad attached to pin 2. 
+ 
+ 
+ The circuit:
+ * transistor driver base resistor attached from pin 13 and emitter to ground 
+ * keypad pushbutton common "K" attached to pin 2 from +5V
+ * keypad pins D, E, F attached to 3 -10 resistors wired to 2
+ * 3-10K resistors attached to pin 2 from ground
+ 
+ * Note: on most Arduinos there is already an LED on the board
+ attached to pin 13.
+ 
+ 
+ created 2005
+ by DojoDave <http://www.0j0.org>
+ modified 30 Aug 2011
+ by Tom Igoe
+ modified 09 Feb 2012
+ by Don Wilcher
+ 
+ This example code is in the public domain.
+ 
+ http://www.arduino.cc/en/Tutorial/Button
+ */
+
+// constants won't change. They're used here to 
+// set pin numbers:
+const int keypadPin = 2;     // the number of the pushbutton pin
+const int vibrationMotorPin =  13;      // the number of the LED pin
+
+// variables will change:
+int buttonState = 0;         // variable for reading the pushbutton status
+
+void setup() {
+  // initialize the  vibrationMotorPin pin as an output:
+  pinMode(vibrationmotorPin, OUTPUT);      
+  // initialize the pushbutton pin as an input:
+  pinMode(keypadPin, INPUT);     
+}
+
+void loop(){
+  // read the state of the pushbutton value:
+  buttonState = digitalRead(keypadPin);
+
+  // check if the pushbutton is pressed.
+  // if it is, the buttonState is HIGH:
+  if (buttonState == HIGH) {     
+    // turn vibration motor on:    
+    digitalWrite(vibrationmotorPin, HIGH); 
+    delay(1); //Pulse vibration motor for a 1millisec
+  } 
+  else {
+    // turn vibration motor off:
+    digitalWrite(vibrationmotorPin, LOW); 
+  }
+}

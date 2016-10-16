@@ -1,0 +1,33 @@
+int sensorPin = A0;
+int sensorValue=0;
+/*
+  LiquidCrystal Library - Read Sensor
+  by Don Wilcher
+  20 Feb 2012
+   
+  Demonstrates the use of a 20x4 LCD display. Analog values are displayed on the Liquid Crystal Display based on a change in sensor value.*/ 
+
+//include the library code:
+#include <LiquidCrystal.h>
+
+// initialize the library with the numbers of the interface pins
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+void setup() {
+  pinMode(sensorPin, INPUT);
+  digitalWrite(sensorPin, HIGH); // turns on the internal pull-up resistor
+  lcd.begin(20,4);
+
+}
+
+void loop() {
+  sensorValue=analogRead(sensorPin);
+  lcd.setCursor(0,0);
+  lcd.print("Sensor value =");
+  lcd.setCursor(0,1);
+  lcd.print(sensorValue);
+  delay(100);
+  sensorValue=0;
+  lcd.clear();
+  
+}

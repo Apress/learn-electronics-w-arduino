@@ -1,0 +1,58 @@
+/*Arduino LED Roulette
+Posted by changb3 in Class Notes
+Connect 3 LED’s to digital output pins 8, 11, and 13 (with resistors in serial with each).
+Connect a pushbutton to pin 2 (and don’t forget the pulldown resistor).
+[code]
+
+/*
+random light
+*/
+const int buttonPin = 2;
+int lightpins[3] = {8,11,13};//Chsnge sequence of LEDs Here! 
+int state=0;
+void setup()
+{
+pinMode (buttonPin,INPUT);
+pinMode (lightpins[0],OUTPUT);
+pinMode (lightpins[1],OUTPUT);
+pinMode (lightpins[2],OUTPUT);
+digitalWrite (lightpins[0],LOW);
+digitalWrite (lightpins[1],LOW);
+digitalWrite (lightpins[2],LOW);
+}
+void loop ()
+{
+int reading = digitalRead (buttonPin);
+int blinktime=20;
+boolean done;
+if (reading == HIGH)
+{
+if (state==0)
+{
+state=1;
+done=false;
+blinktime=20;
+blinktime += 3;
+while (!done)
+{
+for (int j=0;j<3;j++)
+{
+blinktime += random(3);
+digitalWrite(lightpins[j],HIGH);
+if (blinktime>200)
+{
+done=true;
+break;
+}
+delay(blinktime);
+digitalWrite(lightpins[j],LOW);
+delay(blinktime);
+}
+}
+}
+}
+else
+{
+state=0;
+}
+}

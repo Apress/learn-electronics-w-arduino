@@ -1,0 +1,15 @@
+int motorPin = 9;      // motor connected to digital pin 9
+int analogPin = 0;   // potentiometer connected to analog pin 0
+int val = 0;         // variable to store the read value
+
+void setup()
+{
+  pinMode(motorPin, OUTPUT);   // sets the pin as output
+}
+
+void loop()
+{
+  val = analogRead(analogPin);   // read the input pin
+  analogWrite(motorPin, val / 4);  // analogRead values go from 0 to 1023, analogWrite values from 0 to 255
+}
+
